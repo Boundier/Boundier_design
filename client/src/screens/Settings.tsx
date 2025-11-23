@@ -39,6 +39,21 @@ export function SettingsScreen() {
           <p className="text-white/60 text-sm">Customize your Boundier experience</p>
         </header>
 
+        {/* Account */}
+        <section className="space-y-4">
+          <h2 className="text-xs font-bold text-[#0038FF] uppercase tracking-widest mb-4">Account</h2>
+          
+          <div className="glass-panel p-4 flex items-center gap-4">
+            <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-[#0038FF] to-purple-500 flex items-center justify-center text-white font-bold text-lg shadow-lg">
+              JD
+            </div>
+            <div>
+              <div className="text-white font-bold text-lg">John Doe</div>
+              <div className="text-white/40 text-xs">john.doe@example.com</div>
+            </div>
+          </div>
+        </section>
+
         {/* Analysis Settings */}
         <section className="space-y-4">
           <h2 className="text-xs font-bold text-[#0038FF] uppercase tracking-widest mb-4">Analysis</h2>
