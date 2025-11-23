@@ -7,6 +7,7 @@ import NotFound from "@/pages/not-found";
 import { Home } from "@/screens/Home";
 import { SocialFeed } from "@/screens/SocialFeed";
 import { Dashboard } from "@/screens/Dashboard";
+import { SettingsScreen } from "@/screens/Settings";
 
 function Router() {
   return (
@@ -14,6 +15,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/social" component={SocialFeed} />
       <Route path="/dashboard" component={Dashboard} />
+      <Route path="/settings" component={SettingsScreen} />
       <Route component={NotFound} />
     </Switch>
   );

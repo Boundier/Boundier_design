@@ -1,24 +1,35 @@
 import { Link, useLocation } from "wouter";
+import { Home, BarChart2, Settings, Menu } from "lucide-react";
+import { motion } from "framer-motion";
 
 export function TopNav() {
   const [location] = useLocation();
+  const isSocial = location === '/social';
+
+  if (isSocial) return null;
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 p-4 flex justify-between items-center pointer-events-none">
-      <div className="glass-panel px-4 py-2 pointer-events-auto">
-        <span className="font-bold text-white tracking-wider text-sm">BOUNDIER</span>
-      </div>
-      
-      <div className="flex gap-2 pointer-events-auto">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-[#000543] border-t border-white/10 pb-safe">
+      <div className="flex justify-around items-center h-16 px-2">
         <Link href="/">
-          <button className={`glass-panel px-4 py-2 text-xs text-white font-bold transition-colors ${location === '/' ? 'bg-white/20' : ''}`}>
-            HOME
-          </button>
+          <div className={`flex flex-col items-center justify-center w-16 py-1 gap-1 ${location === '/' ? 'text-[#0038FF]' : 'text-white/40'}`}>
+            <Home size={24} strokeWidth={location === '/' ? 2.5 : 2} />
+            <span className="text-[10px] font-medium">Home</span>
+          </div>
         </Link>
+        
         <Link href="/dashboard">
-          <button className={`glass-panel px-4 py-2 text-xs text-white font-bold transition-colors ${location === '/dashboard' ? 'bg-white/20' : ''}`}>
-            DASHBOARD
-          </button>
+          <div className={`flex flex-col items-center justify-center w-16 py-1 gap-1 ${location === '/dashboard' ? 'text-[#0038FF]' : 'text-white/40'}`}>
+            <BarChart2 size={24} strokeWidth={location === '/dashboard' ? 2.5 : 2} />
+            <span className="text-[10px] font-medium">Stats</span>
+          </div>
+        </Link>
+
+        <Link href="/settings">
+          <div className={`flex flex-col items-center justify-center w-16 py-1 gap-1 ${location === '/settings' ? 'text-[#0038FF]' : 'text-white/40'}`}>
+            <Settings size={24} strokeWidth={location === '/settings' ? 2.5 : 2} />
+            <span className="text-[10px] font-medium">Settings</span>
+          </div>
         </Link>
       </div>
     </nav>

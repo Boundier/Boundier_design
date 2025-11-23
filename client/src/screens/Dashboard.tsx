@@ -4,7 +4,7 @@ import { getVulnerabilityProfile, getPatternGraph, resetData, InfluenceVector } 
 import { VulnerabilityRadar } from "@/components/VulnerabilityRadar";
 import { PatternLineChart } from "@/components/PatternLineChart";
 import { motion } from "framer-motion";
-import { RefreshCw, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 
 export function Dashboard() {
   const [profile, setProfile] = useState<InfluenceVector | null>(null);
@@ -46,19 +46,18 @@ export function Dashboard() {
     if (confirm("Reset all demo data?")) {
       resetData();
       refreshData();
-      // Force reload to clear state if needed or just let the interval catch it
       window.location.reload();
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#000543] pb-20 pt-20 px-4 md:px-8">
+    <div className="min-h-screen bg-[#000543] pb-24 pt-safe px-4 md:px-8">
       <TopNav />
 
-      <div className="max-w-4xl mx-auto space-y-6">
-        <header className="flex justify-between items-end mb-8">
+      <div className="max-w-md mx-auto space-y-6 pt-8">
+        <header className="flex justify-between items-end mb-4">
           <div>
-            <h1 className="text-3xl text-white font-bold mb-2">Dashboard</h1>
+            <h1 className="text-3xl text-white font-bold mb-2">Stats</h1>
             <p className="text-white/60 text-sm">Real-time Influence Analysis</p>
           </div>
           <button 
@@ -69,7 +68,7 @@ export function Dashboard() {
           </button>
         </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="flex flex-col gap-6">
           {/* Vulnerability Profile */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}

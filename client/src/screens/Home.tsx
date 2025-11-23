@@ -1,26 +1,11 @@
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { TopNav } from "@/components/TopNav";
-import { Footer } from "@/components/Footer";
-import { useState } from "react";
+import logoImage from "@assets/LogoForHeader-removebg-preview_1763889598297.png";
 
 export function Home() {
-  const [reduceMotion, setReduceMotion] = useState(false);
-  const [reduceTransparency, setReduceTransparency] = useState(false);
-
-  const toggleMotion = () => {
-    setReduceMotion(!reduceMotion);
-    document.body.classList.toggle("reduce-motion");
-  };
-
-  const toggleTransparency = () => {
-    setReduceTransparency(!reduceTransparency);
-    document.body.classList.toggle("reduce-transparency");
-  };
-
   return (
-    <div className="min-h-screen bg-[#000543] relative overflow-hidden flex flex-col items-center justify-center p-6">
-      <TopNav />
+    <div className="min-h-screen bg-[#000543] relative overflow-hidden flex flex-col items-center justify-center p-6 pb-24">
       
       {/* Abstract Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
@@ -32,19 +17,12 @@ export function Home() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="relative z-10 text-center max-w-md w-full"
+        className="relative z-10 text-center max-w-md w-full flex flex-col items-center"
       >
-        {/* Logo Placeholder */}
-        <div className="w-20 h-20 border-2 border-white/20 rounded-full mx-auto mb-8 flex items-center justify-center glass-panel">
-          <div className="w-10 h-10 bg-[#0038FF] rounded-full opacity-80" />
+        {/* Logo */}
+        <div className="mb-12">
+          <img src={logoImage} alt="Boundier" className="h-16 object-contain" />
         </div>
-
-        <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">
-          Boundier
-        </h1>
-        <p className="text-white/60 mb-12 text-lg font-light">
-          Influence Detection Demo
-        </p>
 
         <Link href="/social">
           <motion.button
@@ -56,24 +34,12 @@ export function Home() {
           </motion.button>
         </Link>
 
-        {/* Accessibility Toggles */}
-        <div className="mt-12 flex gap-4 justify-center">
-          <button 
-            onClick={toggleMotion}
-            className={`text-[10px] px-3 py-1 rounded-full border ${reduceMotion ? 'bg-white text-[#000543] border-white' : 'text-white/40 border-white/20'}`}
-          >
-            Reduce Motion
-          </button>
-          <button 
-            onClick={toggleTransparency}
-            className={`text-[10px] px-3 py-1 rounded-full border ${reduceTransparency ? 'bg-white text-[#000543] border-white' : 'text-white/40 border-white/20'}`}
-          >
-            Reduce Transparency
-          </button>
-        </div>
+        <p className="mt-8 text-white/40 text-sm font-light">
+          This is a mock environment to demonstrate influence detection.
+        </p>
       </motion.div>
 
-      <Footer />
+      <TopNav />
     </div>
   );
 }
