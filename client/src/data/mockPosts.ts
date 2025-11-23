@@ -1,0 +1,114 @@
+export interface AudioFlag {
+  high_tension: boolean;
+  speechRate: number;
+}
+
+export interface Thumbnail {
+  saturation: number;
+  faces: number;
+  expression: "neutral" | "shocked" | "happy" | "sad";
+}
+
+export interface Post {
+  id: string;
+  type: "headline" | "video" | "image";
+  title: string;
+  text: string;
+  thumbnail: Thumbnail;
+  audioFlag: AudioFlag;
+  punctuationIntensity: number;
+  capsIntensity: number;
+  clickbaitWords: string[];
+  timestamp: number;
+}
+
+const now = Date.now();
+const hour = 3600 * 1000;
+const day = 24 * hour;
+
+export const MOCK_POSTS: Post[] = [
+  {
+    id: "post-1",
+    type: "headline",
+    title: "Experts warn board exams may be harder this year",
+    text: "New study suggests changing patterns will increase difficulty.",
+    thumbnail: { saturation: 0.2, faces: 0, expression: "neutral" },
+    audioFlag: { high_tension: false, speechRate: 1.0 },
+    punctuationIntensity: 0,
+    capsIntensity: 0,
+    clickbaitWords: [],
+    timestamp: now - 3 * hour,
+  },
+  {
+    id: "post-2",
+    type: "video",
+    title: "This ONE trick will ruin your exam score — watch now!",
+    text: "Students accidentally ignore this crucial step.",
+    thumbnail: { saturation: 0.9, faces: 1, expression: "shocked" },
+    audioFlag: { high_tension: true, speechRate: 1.4 },
+    punctuationIntensity: 2,
+    capsIntensity: 1,
+    clickbaitWords: ["one trick", "ruin", "watch now"],
+    timestamp: now - 1 * day,
+  },
+  {
+    id: "post-3",
+    type: "image",
+    title: "Only 2 hours left to claim the scholarship!",
+    text: "Limited seats, apply immediately.",
+    thumbnail: { saturation: 0.8, faces: 0, expression: "neutral" },
+    audioFlag: { high_tension: true, speechRate: 1.2 },
+    punctuationIntensity: 1,
+    capsIntensity: 1,
+    clickbaitWords: ["only 2 hours", "limited"],
+    timestamp: now - 10 * hour,
+  },
+  {
+    id: "post-4",
+    type: "headline",
+    title: "You won’t believe what happened at the exam center...",
+    text: "A bizarre turn of events shocked students.",
+    thumbnail: { saturation: 0.85, faces: 1, expression: "shocked" },
+    audioFlag: { high_tension: true, speechRate: 1.6 },
+    punctuationIntensity: 3,
+    capsIntensity: 0,
+    clickbaitWords: ["you won't believe", "shocking"],
+    timestamp: now - 4 * day,
+  },
+  {
+    id: "post-5",
+    type: "image",
+    title: "How study groups helped me improve",
+    text: "A student shares practical tips with evidence.",
+    thumbnail: { saturation: 0.25, faces: 2, expression: "neutral" },
+    audioFlag: { high_tension: false, speechRate: 0.95 },
+    punctuationIntensity: 0,
+    capsIntensity: 0,
+    clickbaitWords: [],
+    timestamp: now - 2 * day,
+  },
+  {
+    id: "post-6",
+    type: "video",
+    title: "Survey: Teachers reveal the top mistakes students make",
+    text: "Research-based suggestions inside.",
+    thumbnail: { saturation: 0.3, faces: 1, expression: "neutral" },
+    audioFlag: { high_tension: false, speechRate: 1.0 },
+    punctuationIntensity: 0,
+    capsIntensity: 0,
+    clickbaitWords: ["survey", "reveal"],
+    timestamp: now - 5 * day,
+  },
+  {
+    id: "post-7",
+    type: "headline",
+    title: "People like you are skipping this chapter — experts say",
+    text: "Identity framing and pressure to conform.",
+    thumbnail: { saturation: 0.4, faces: 0, expression: "neutral" },
+    audioFlag: { high_tension: false, speechRate: 1.0 },
+    punctuationIntensity: 0,
+    capsIntensity: 0,
+    clickbaitWords: ["people like you"],
+    timestamp: now - 6 * hour,
+  },
+];

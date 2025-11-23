@@ -1,0 +1,33 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme inline {
+  --color-primary: #000543;
+  --color-accent: #0038FF;
+  --color-background: #000543;
+  --color-foreground: #ffffff;
+  
+  --font-sans: 'Cooper Hewitt', sans-serif;
+  --font-display: 'Cooper Hewitt', sans-serif;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-primary);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 700;
+  }
+}
+
+/* High contrast mode support */
+.high-contrast {
+  --color-primary: #000000;
+  --color-accent: #0000FF;
+}
