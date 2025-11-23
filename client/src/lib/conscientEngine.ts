@@ -148,13 +148,32 @@ export function updateVulnerabilityProfile(influence: InfluenceVector, response:
 }
 
 export function getVulnerabilityProfile() {
-  return storage.getProfile<InfluenceVector>({
-    fear: 0, urgency: 0, hype: 0, authority: 0, curiosity: 0, visual_hype: 0
-  });
+  const profile = storage.getProfile<InfluenceVector | null>(null);
+  
+  if (!profile) {
+    // Default profile based on mock posts (Fear, Hype, Urgency)
+    return {
+      fear: 0.45,
+      urgency: 0.3,
+      hype: 0.6,
+      authority: 0.2,
+      curiosity: 0.1,
+      visual_hype: 0.4
+    };
+  }
+  
+  return profile;
 }
 
 export function getPatternGraph() {
-  return storage.getPattern<number>();
+  const pattern = storage.getPattern<number>();
+  
+  if (pattern.length === 0) {
+    // Default pattern
+    return [0.2, 0.4, 0.3, 0.6, 0.5, 0.4, 0.55];
+  }
+  
+  return pattern;
 }
 
 export function resetData() {

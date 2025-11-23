@@ -9,6 +9,7 @@ import { Home } from "@/screens/Home";
 import { SocialFeed } from "@/screens/SocialFeed";
 import { Dashboard } from "@/screens/Dashboard";
 import { SettingsScreen } from "@/screens/Settings";
+import { GestureNav } from "@/components/GestureNav";
 
 function Router() {
   return (
@@ -29,6 +30,7 @@ function App() {
       <TooltipProvider>
         <Toaster />
         <Router />
+        <GestureNav />
       </TooltipProvider>
     </QueryClientProvider>
   );
