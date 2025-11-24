@@ -2,29 +2,15 @@ import { useState } from "react";
 import { Link } from "wouter";
 import { MOCK_POSTS, Post } from "@/data/mockPosts";
 import { PostCard } from "@/components/PostCard";
-import { AnalysisSidebar } from "@/components/AnalysisSidebar";
 import { ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { analyzePost, updateVulnerabilityProfile, AnalysisResult } from "@/lib/conscientEngine";
+import { analyzePost, updateVulnerabilityProfile } from "@/lib/conscientEngine";
 import { storage } from "@/lib/storage";
 
 export function SocialFeed() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [activePost, setActivePost] = useState<Post | null>(null);
   const { toast } = useToast();
 
-  // We keep the sidebar logic but trigger it differently now (via Share menu)
-  // Or actually, the user said "share button add boundier for indiviual manual post analysis for further stats/ details"
-  // "logged under a new tab called History"
-  
-  // So maybe we don't show the sidebar immediately? Or do we?
-  // "further stats/details" implies we might want to see it.
-  // Let's show the sidebar for immediate feedback AND save to history.
-
   const handleAnalyze = (post: Post) => {
-    setActivePost(post);
-    setSidebarOpen(true);
-    
     // Perform analysis and save to history
     const result = analyzePost(post, {
         dwellTimeMs: 4000,
@@ -41,13 +27,10 @@ export function SocialFeed() {
     storage.addHistoryItem(result);
 
     toast({
-      title: "Sent to Boundier",
-      description: "Analysis saved to History.",
+      title: "Analyzed with Boundier",
+      description: "Result saved to History log.",
+      duration: 3000,
     });
-  };
-
-  const handleSidebarClose = () => {
-    setSidebarOpen(false);
   };
 
   return (
@@ -79,14 +62,6 @@ export function SocialFeed() {
           </div>
         </div>
       </div>
-
-      {/* Analysis Sidebar (Still useful for immediate view) */}
-      <AnalysisSidebar 
-        isOpen={sidebarOpen} 
-        onClose={handleSidebarClose} 
-        post={activePost}
-        onApply={() => {}}
-      />
 
     </div>
   );

@@ -60,8 +60,8 @@ export function OSHome() {
               whileTap={{ scale: 0.9 }}
               className="flex flex-col items-center gap-2 group"
             >
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-pink-500 to-orange-400 flex items-center justify-center shadow-lg border border-white/10 relative">
-                 <div className="w-8 h-8 border-2 border-white rounded-lg" />
+              <div className="w-14 h-14 rounded-2xl bg-black flex items-center justify-center shadow-lg border border-white/10 relative overflow-hidden">
+                 <div className="text-white font-bold text-3xl">X</div>
               </div>
               <span className="text-white text-xs font-medium drop-shadow-md">Social</span>
             </motion.div>

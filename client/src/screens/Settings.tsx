@@ -1,9 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { TopNav } from "@/components/TopNav";
-import { ArrowLeft, Moon, Eye, Activity, Bell, Shield } from "lucide-react";
-import { Link } from "wouter";
+import { Moon, Eye, Activity, Bell, Shield } from "lucide-react";
 import { motion } from "framer-motion";
-import { storage } from "@/lib/storage";
 
 export function SettingsScreen() {
   const [settings, setSettings] = useState({
@@ -61,15 +59,15 @@ export function SettingsScreen() {
           <div className="glass-panel p-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-[#0038FF]">
-                <Activity size={16} />
+                <Shield size={16} />
               </div>
               <div>
-                <div className="text-white font-medium text-sm">Enable Overlay</div>
-                <div className="text-white/40 text-[10px]">Show analysis sidebar in apps</div>
+                <div className="text-white font-medium text-sm">Auto-Analyze</div>
+                <div className="text-white/40 text-[10px]">Analyze content in background</div>
               </div>
             </div>
             <button 
-              onClick={() => toggleSetting('enableOverlay')}
+              onClick={() => toggleSetting('enableOverlay')} 
               className={`w-12 h-6 rounded-full p-1 transition-colors ${settings.enableOverlay ? 'bg-[#0038FF]' : 'bg-white/10'}`}
             >
               <motion.div 
@@ -79,23 +77,22 @@ export function SettingsScreen() {
             </button>
           </div>
 
-           <div className="glass-panel p-4 flex items-center justify-between">
+          <div className="glass-panel p-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-[#0038FF]">
-                <Bell size={16} />
+                <Activity size={16} />
               </div>
               <div>
-                <div className="text-white font-medium text-sm">Haptic Feedback</div>
-                <div className="text-white/40 text-[10px]">Vibrate on detection</div>
+                <div className="text-white font-medium text-sm">Visual Warning</div>
+                <div className="text-white/40 text-[10px]">Subtle overlay on detection</div>
               </div>
             </div>
             <button 
-              onClick={() => toggleSetting('hapticFeedback')}
-              className={`w-12 h-6 rounded-full p-1 transition-colors ${settings.hapticFeedback ? 'bg-[#0038FF]' : 'bg-white/10'}`}
+              className={`w-12 h-6 rounded-full p-1 transition-colors bg-[#0038FF]`}
             >
               <motion.div 
                 className="w-4 h-4 bg-white rounded-full"
-                animate={{ x: settings.hapticFeedback ? 24 : 0 }}
+                animate={{ x: 24 }}
               />
             </button>
           </div>

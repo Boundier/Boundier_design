@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import { TopNav } from "@/components/TopNav";
 import { storage } from "@/lib/storage";
 import { AnalysisResult } from "@/lib/conscientEngine";
-import { motion } from "framer-motion";
-import { Clock, ChevronRight, Trash2, AlertTriangle, ExternalLink } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Clock, ChevronRight, Trash2, AlertTriangle, ExternalLink, ChevronDown, X } from "lucide-react";
 import { MOCK_POSTS } from "@/data/mockPosts";
 
 export function HistoryScreen() {
   const [history, setHistory] = useState<AnalysisResult[]>([]);
+  const [selectedItem, setSelectedItem] = useState<AnalysisResult | null>(null);
 
   useEffect(() => {
     const loadHistory = () => {
@@ -23,13 +24,6 @@ export function HistoryScreen() {
 
   const handleClear = () => {
     if (confirm("Clear history?")) {
-      storage.reset(); // Note: This resets EVERYTHING in the current implementation. 
-      // Maybe we should only clear history? But the prompt implies "History" is part of the app state.
-      // For now, let's just clear history key manually to be safe if we want to keep profile.
-      // But storage.reset() clears everything. Let's stick to storage.reset() for "Reset Data" in settings/dashboard,
-      // but here maybe just clear history?
-      // The user asked for "logged under a new tab called History".
-      // Let's just clear history item.
       localStorage.removeItem('boundier_history');
       setHistory([]);
     }
@@ -38,6 +32,14 @@ export function HistoryScreen() {
   const getPostTitle = (id: string) => {
     const post = MOCK_POSTS.find(p => p.id === id);
     return post ? post.title : "Unknown Post";
+  };
+
+  const openDetail = (item: AnalysisResult) => {
+    setSelectedItem(item);
+  };
+
+  const closeDetail = () => {
+    setSelectedItem(null);
   };
 
   return (
@@ -76,6 +78,7 @@ export function HistoryScreen() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.05 }}
+                onClick={() => openDetail(item)}
                 className="glass-panel p-4 hover:bg-white/10 transition-colors cursor-pointer group"
               >
                 <div className="flex justify-between items-start mb-2">
@@ -116,6 +119,101 @@ export function HistoryScreen() {
           )}
         </div>
       </div>
+
+      {/* Detail Modal */}
+      <AnimatePresence>
+        {selectedItem && (
+          <motion.div 
+            className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4 sm:p-8 bg-black/60 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closeDetail}
+          >
+            <motion.div 
+              className="bg-[#0a0f35] border border-white/10 w-full max-w-md rounded-2xl overflow-hidden shadow-2xl max-h-[80vh] flex flex-col"
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-4 border-b border-white/10 flex justify-between items-center bg-white/5">
+                 <div>
+                    <h3 className="text-white font-bold text-sm">Analysis Detail</h3>
+                    <p className="text-white/40 text-[10px] font-mono">{new Date(selectedItem.timestamp).toLocaleString()}</p>
+                 </div>
+                 <button onClick={closeDetail} className="p-2 hover:bg-white/10 rounded-full text-white/60">
+                    <X size={20} />
+                 </button>
+              </div>
+              
+              <div className="p-6 overflow-y-auto space-y-6">
+                 {/* Content Preview */}
+                 <div className="bg-white/5 p-4 rounded-lg border border-white/5">
+                    <h4 className="text-white font-medium text-sm mb-1">
+                       {getPostTitle(selectedItem.postId)}
+                    </h4>
+                    <p className="text-white/40 text-xs">
+                       Analyzed Content
+                    </p>
+                 </div>
+
+                 {/* Influence Vector */}
+                 <div>
+                    <h5 className="text-xs uppercase tracking-widest opacity-50 mb-3 font-bold text-white">Influence Vector</h5>
+                    <div className="space-y-2">
+                      {Object.entries(selectedItem.influenceVector).map(([key, value]) => (
+                        <div key={key} className="group">
+                          <div className="flex justify-between text-[10px] uppercase mb-0.5 text-white/80">
+                            <span>{key.replace('_', ' ')}</span>
+                            <span>{(value * 100).toFixed(0)}%</span>
+                          </div>
+                          <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+                            <div 
+                              className="h-full bg-[#0038FF]"
+                              style={{ width: `${value * 100}%` }}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Distortion Vector */}
+                  <div>
+                    <h5 className="text-xs uppercase tracking-widest opacity-50 mb-3 font-bold text-white">Distortion Signals</h5>
+                    <div className="space-y-2">
+                      {Object.entries(selectedItem.distortionVector).map(([key, value]) => (
+                        <div key={key} className="group">
+                          <div className="flex justify-between text-[10px] uppercase mb-0.5 text-white/80">
+                            <span>{key.replace('_', ' ')}</span>
+                            <span>{(value * 100).toFixed(0)}%</span>
+                          </div>
+                          <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+                            <div 
+                              className="h-full bg-[#FF3838]"
+                              style={{ width: `${value * 100}%` }}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Explanation */}
+                  <div className="bg-[#0038FF]/20 border border-[#0038FF]/30 p-4 rounded-lg">
+                    <p className="text-sm leading-relaxed text-white/90">
+                      {selectedItem.explanation}
+                    </p>
+                  </div>
+
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
+

@@ -106,10 +106,10 @@ export function PostCard({ post, onAnalyze }: PostCardProps) {
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
-                <DropdownMenuItem onClick={() => {}} className="cursor-pointer">
+                <DropdownMenuItem onClick={() => {}} className="cursor-pointer text-gray-700 focus:bg-gray-50 focus:text-gray-900">
                   Copy link
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => {}} className="cursor-pointer">
+                <DropdownMenuItem onClick={() => {}} className="cursor-pointer text-gray-700 focus:bg-gray-50 focus:text-gray-900">
                   Share via...
                 </DropdownMenuItem>
                 <div className="h-px bg-gray-100 my-1" />
