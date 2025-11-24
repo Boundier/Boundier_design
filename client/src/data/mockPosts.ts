@@ -28,11 +28,25 @@ export interface Post {
   timestamp: number;
   imageUrl?: string;
   biasScore: number;
+  user: {
+    name: string;
+    handle: string;
+    avatar: string;
+  };
 }
 
 const now = Date.now();
 const hour = 3600 * 1000;
 const day = 24 * hour;
+
+// Mock Avatars (using stock images or placeholders)
+// Since we can't fetch external avatars easily without CORS or hotlinking issues sometimes, 
+// we'll use colorful placeholders or reliable stock if available. 
+// For now, let's use UI avatars style service as fallback or just colors. 
+// Actually, let's use some stock images as avatars if possible, or just colors.
+// Wait, I can use the stock_image_tool to get some faces if I wanted, but I'll just mock with colors or placeholders for speed unless requested.
+// User asked for "add pfps and realistic usernames". 
+// I will use https://i.pravatar.cc/150?u=... for avatars, it's standard for mocks.
 
 export const MOCK_POSTS: Post[] = [
   {
@@ -47,7 +61,12 @@ export const MOCK_POSTS: Post[] = [
     clickbaitWords: [],
     timestamp: now - 3 * hour,
     imageUrl: studentExam,
-    biasScore: 0.2
+    biasScore: 0.2,
+    user: {
+      name: "Education Today",
+      handle: "@edutoday_official",
+      avatar: "https://i.pravatar.cc/150?u=edutoday"
+    }
   },
   {
     id: "post-2",
@@ -61,7 +80,12 @@ export const MOCK_POSTS: Post[] = [
     clickbaitWords: ["one trick", "ruin", "watch now"],
     timestamp: now - 1 * day,
     imageUrl: shockedStudent,
-    biasScore: 0.8
+    biasScore: 0.8,
+    user: {
+      name: "Exam Hacker",
+      handle: "@examhacker_99",
+      avatar: "https://i.pravatar.cc/150?u=examhacker"
+    }
   },
   {
     id: "post-3",
@@ -75,7 +99,12 @@ export const MOCK_POSTS: Post[] = [
     clickbaitWords: ["only 2 hours", "limited"],
     timestamp: now - 10 * hour,
     imageUrl: graduation,
-    biasScore: 0.6
+    biasScore: 0.6,
+    user: {
+      name: "Scholarship Alert",
+      handle: "@scholarships_now",
+      avatar: "https://i.pravatar.cc/150?u=scholarship"
+    }
   },
   {
     id: "post-4",
@@ -89,7 +118,12 @@ export const MOCK_POSTS: Post[] = [
     clickbaitWords: ["you won't believe", "shocking"],
     timestamp: now - 4 * day,
     imageUrl: studentExam, // Reuse as generic exam center
-    biasScore: 0.9
+    biasScore: 0.9,
+    user: {
+      name: "Viral Student News",
+      handle: "@viral_student",
+      avatar: "https://i.pravatar.cc/150?u=viral"
+    }
   },
   {
     id: "post-5",
@@ -103,7 +137,12 @@ export const MOCK_POSTS: Post[] = [
     clickbaitWords: [],
     timestamp: now - 2 * day,
     imageUrl: groupStudy,
-    biasScore: 0.1
+    biasScore: 0.1,
+    user: {
+      name: "Sarah Jenkins",
+      handle: "@sarah_studies",
+      avatar: "https://i.pravatar.cc/150?u=sarah"
+    }
   },
   {
     id: "post-6",
@@ -117,7 +156,12 @@ export const MOCK_POSTS: Post[] = [
     clickbaitWords: ["survey", "reveal"],
     timestamp: now - 5 * day,
     imageUrl: teacher,
-    biasScore: 0.3
+    biasScore: 0.3,
+    user: {
+      name: "Academic Insights",
+      handle: "@academic_insights",
+      avatar: "https://i.pravatar.cc/150?u=academic"
+    }
   },
   {
     id: "post-7",
@@ -131,7 +175,12 @@ export const MOCK_POSTS: Post[] = [
     clickbaitWords: ["people like you"],
     timestamp: now - 6 * hour,
     imageUrl: studentExam, // Reuse generic exam
-    biasScore: 0.7
+    biasScore: 0.7,
+    user: {
+      name: "Psychology Daily",
+      handle: "@psych_daily",
+      avatar: "https://i.pravatar.cc/150?u=psych"
+    }
   },
   {
     id: "post-8",
@@ -145,7 +194,12 @@ export const MOCK_POSTS: Post[] = [
     clickbaitWords: [],
     timestamp: now - 2 * hour,
     imageUrl: "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?q=80&w=2070&auto=format&fit=crop",
-    biasScore: 0.0
+    biasScore: 0.0,
+    user: {
+      name: "Mike Chen",
+      handle: "@mike_captures",
+      avatar: "https://i.pravatar.cc/150?u=mike"
+    }
   },
   {
     id: "post-9",
@@ -159,7 +213,12 @@ export const MOCK_POSTS: Post[] = [
     clickbaitWords: [],
     timestamp: now - 30 * 60000, // 30 mins ago
     imageUrl: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=1974&auto=format&fit=crop",
-    biasScore: 0.0
+    biasScore: 0.0,
+    user: {
+      name: "Student Forum",
+      handle: "@campus_connect",
+      avatar: "https://i.pravatar.cc/150?u=forum"
+    }
   },
   {
     id: "post-10",
@@ -173,6 +232,11 @@ export const MOCK_POSTS: Post[] = [
     clickbaitWords: [],
     timestamp: now - 5 * hour,
     imageUrl: "https://images.unsplash.com/photo-1587831990711-23ca6441447b?q=80&w=2003&auto=format&fit=crop",
-    biasScore: 0.0
+    biasScore: 0.0,
+    user: {
+      name: "Dev Life",
+      handle: "@dev_life_2024",
+      avatar: "https://i.pravatar.cc/150?u=dev"
+    }
   }
 ];

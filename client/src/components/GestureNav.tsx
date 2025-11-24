@@ -12,10 +12,10 @@ export function GestureNav() {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 h-5 z-[100] flex justify-center items-end pb-1 pointer-events-none">
+    <div className="fixed bottom-0 left-0 right-0 h-8 z-[100] flex justify-center items-end pb-2 pointer-events-none">
       <motion.div 
-        className="w-32 h-1 bg-white/40 rounded-full pointer-events-auto cursor-pointer backdrop-blur-md"
-        whileHover={{ scale: 1.1, backgroundColor: "rgba(255,255,255,0.8)" }}
+        className="w-32 h-1.5 bg-gray-400/80 rounded-full pointer-events-auto cursor-pointer backdrop-blur-md shadow-sm"
+        whileHover={{ scale: 1.1, backgroundColor: "rgba(200,200,200,0.9)" }}
         whileTap={{ scale: 0.9 }}
         onClick={handleHome}
       />

@@ -3,29 +3,56 @@ import { TopNav } from "@/components/TopNav";
 import { storage } from "@/lib/storage";
 import { AnalysisResult } from "@/lib/conscientEngine";
 import { motion, AnimatePresence } from "framer-motion";
-import { Clock, ChevronRight, Trash2, AlertTriangle, ExternalLink, ChevronDown, X } from "lucide-react";
+import { Clock, ChevronRight, Trash2, AlertTriangle, ExternalLink, ChevronDown, X, Brain } from "lucide-react";
 import { MOCK_POSTS } from "@/data/mockPosts";
+import { useLocation } from "wouter";
 
 export function HistoryScreen() {
   const [history, setHistory] = useState<AnalysisResult[]>([]);
   const [selectedItem, setSelectedItem] = useState<AnalysisResult | null>(null);
+  const [location] = useLocation();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const loadHistory = () => {
       const data = storage.getHistory<AnalysisResult>();
       setHistory(data);
+      return data;
     };
     
-    loadHistory();
+    const data = loadHistory();
+    
+    // Handle URL params for redirect
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    const isNew = params.get('new') === 'true';
+
+    if (id) {
+        const item = data.find(i => i.postId === id);
+        if (item) {
+            if (isNew) {
+                setIsLoading(true);
+                setTimeout(() => {
+                    setIsLoading(false);
+                    setSelectedItem(item);
+                    // Clean up URL if possible or just let it be
+                }, 3000);
+            } else {
+                setSelectedItem(item);
+            }
+        }
+    }
+
     // Poll for updates (since we don't have a real store subscription)
     const interval = setInterval(loadHistory, 2000);
     return () => clearInterval(interval);
-  }, []);
+  }, []); // Only run on mount
 
   const handleClear = () => {
     if (confirm("Clear history?")) {
       localStorage.removeItem('boundier_history');
       setHistory([]);
+      setSelectedItem(null);
     }
   };
   
@@ -41,6 +68,23 @@ export function HistoryScreen() {
   const closeDetail = () => {
     setSelectedItem(null);
   };
+
+  if (isLoading) {
+      return (
+          <div className="min-h-screen bg-[#000543] flex flex-col items-center justify-center p-8">
+              <motion.div 
+                className="w-24 h-24 rounded-full border-4 border-[#0038FF]/30 flex items-center justify-center mb-6 relative"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+              >
+                 <div className="absolute inset-0 rounded-full border-4 border-t-[#0038FF] border-r-transparent border-b-transparent border-l-transparent" />
+                 <Brain size={32} className="text-white" />
+              </motion.div>
+              <h2 className="text-white text-xl font-bold mb-2">Analyzing Content</h2>
+              <p className="text-white/60 text-sm text-center">Deconstructing influence patterns and distortion signals...</p>
+          </div>
+      );
+  }
 
   return (
     <div className="min-h-screen bg-[#000543] pb-24 pt-safe px-4 md:px-8">

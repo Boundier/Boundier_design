@@ -12,7 +12,7 @@ import {
 import { VulnerabilityRadar } from "@/components/VulnerabilityRadar";
 import { PatternLineChart } from "@/components/PatternLineChart";
 import { motion } from "framer-motion";
-import { Trash2, AlertTriangle, Layers, Network } from "lucide-react";
+import { Trash2, AlertTriangle, Layers, Network, RefreshCw } from "lucide-react";
 
 export function Dashboard() {
   const [profile, setProfile] = useState<InfluenceVector | null>(null);
@@ -62,9 +62,10 @@ export function Dashboard() {
           </div>
           <button 
             onClick={handleReset}
-            className="p-2 text-white/40 hover:text-red-400 transition-colors"
+            className="p-2 text-white/40 hover:text-blue-400 transition-colors flex items-center gap-2"
           >
-            <Trash2 size={18} />
+            <span className="text-xs font-bold">RESET</span>
+            <RefreshCw size={16} />
           </button>
         </header>
 

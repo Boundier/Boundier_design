@@ -1,17 +1,34 @@
 import { useState } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { MOCK_POSTS, Post } from "@/data/mockPosts";
 import { PostCard } from "@/components/PostCard";
 import { ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { analyzePost, updateVulnerabilityProfile } from "@/lib/conscientEngine";
+import { analyzePost, updateVulnerabilityProfile, AnalysisResult } from "@/lib/conscientEngine";
 import { storage } from "@/lib/storage";
 
 export function SocialFeed() {
   const { toast } = useToast();
+  const [, setLocation] = useLocation();
 
   const handleAnalyze = (post: Post) => {
-    // Perform analysis and save to history
+    // Check if already analyzed
+    const existingHistory = storage.getHistory<AnalysisResult>();
+    const alreadyAnalyzed = existingHistory.find(h => h.postId === post.id);
+
+    if (alreadyAnalyzed) {
+        toast({
+            title: "Already Analyzed",
+            description: "Opening existing analysis...",
+            duration: 2000,
+        });
+        // Redirect immediately to history with specific post ID
+        // We can pass state via query param for now
+        setLocation(`/history?id=${post.id}`);
+        return;
+    }
+
+    // Perform analysis
     const result = analyzePost(post, {
         dwellTimeMs: 4000,
         tapCount: 1,
@@ -20,7 +37,7 @@ export function SocialFeed() {
         openCount: 1
     });
 
-    // Update profile (simulated "reading" it)
+    // Update profile
     updateVulnerabilityProfile(result.influenceVector, result.distortionVector, result.responseVector);
 
     // Save to History
@@ -28,9 +45,14 @@ export function SocialFeed() {
 
     toast({
       title: "Analyzed with Boundier",
-      description: "Result saved to History log.",
-      duration: 3000,
+      description: "Redirecting to analysis...",
+      duration: 2000,
     });
+
+    // Redirect to history with "new" flag to trigger loading
+    setTimeout(() => {
+        setLocation(`/history?id=${post.id}&new=true`);
+    }, 500);
   };
 
   return (

@@ -23,10 +23,13 @@ export function OSHome() {
       {/* Status Bar */}
       <div className="relative z-10 px-6 py-3 flex justify-between items-center text-white/80 text-xs font-medium">
         <span>{currentTime}</span>
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-center">
           <Signal size={14} />
           <Wifi size={14} />
-          <Battery size={14} />
+          <div className="relative w-5 h-3 border border-white/80 rounded-[3px] p-[1px] flex items-center">
+             <div className="h-full bg-white w-[70%] rounded-[1px]" />
+             <div className="absolute -right-[2px] top-[2px] bottom-[2px] w-[1px] bg-white/80 rounded-r-[1px]" />
+          </div>
         </div>
       </div>
 

@@ -23,7 +23,9 @@ export function PostCard({ post, onAnalyze }: PostCardProps) {
       <div className="flex gap-3">
         {/* Avatar */}
         <div className="shrink-0">
-          <div className="w-10 h-10 rounded-full bg-gray-200" />
+          <div className="w-10 h-10 rounded-full bg-gray-200 overflow-hidden">
+            <img src={post.user.avatar} alt={post.user.name} className="w-full h-full object-cover" />
+          </div>
         </div>
 
         {/* Content */}
@@ -31,8 +33,8 @@ export function PostCard({ post, onAnalyze }: PostCardProps) {
           {/* Header */}
           <div className="flex items-center justify-between mb-1">
             <div className="flex items-center gap-1.5 overflow-hidden">
-              <span className="font-bold text-gray-900 truncate text-[15px]">User Name</span>
-              <span className="text-gray-500 text-[14px] truncate">@username</span>
+              <span className="font-bold text-gray-900 truncate text-[15px]">{post.user.name}</span>
+              <span className="text-gray-500 text-[14px] truncate">{post.user.handle}</span>
               <span className="text-gray-500 text-[14px]">·</span>
               <span className="text-gray-500 text-[14px] hover:underline cursor-pointer">
                 {Math.floor((Date.now() - post.timestamp) / 3600000)}h
@@ -105,7 +107,7 @@ export function PostCard({ post, onAnalyze }: PostCardProps) {
                   </div>
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuContent align="end" className="w-56 bg-white border border-gray-200 shadow-lg z-50">
                 <DropdownMenuItem onClick={() => {}} className="cursor-pointer text-gray-700 focus:bg-gray-50 focus:text-gray-900">
                   Copy link
                 </DropdownMenuItem>
